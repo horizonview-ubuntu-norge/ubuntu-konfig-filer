@@ -42,7 +42,6 @@ gwmedprefiks=$(echo $ipaddr/$prefixxx)
 
 # adding network card
 nmcli con add con-name nettverk ifname $nettkort type ethernet ip4 ${ipmedprefiks} gw4 ${gateway}
-#nmcli con add con-name nettverk ifname $nettkort type ethernet ip4 129.240.96.49/23 gw4 129.240.96.1
 nmcli con mod nettverk ipv4.addresses $ipmedprefiks
 nmcli con mod nettverk ipv4.method manual
 nmcli con mod nettverk ipv4.dns "${primdns} ${secdns}"
