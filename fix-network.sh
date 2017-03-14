@@ -32,15 +32,16 @@ ethernetnavn () {
 }
 
 hostname=$(hostname)
-macaddress=$(cat /sys/class/net/ens160/address)
 primdns=129.240.2.27
 secdns=129.240.2.40
 nettkort=$(ethernetnavn)
+macaddress=$(cat /sys/class/net/$nettkort/address)
 IPmedPrefiks=$(echo $ipaddr/$prefixxx)
 GWmedPrefiks=$(echo $ipaddr/$prefixxx)
 
-
-# adding network connection
+# Her opprettes nettverkstilkoblingen
+# 
+#
 nmcli con add con-name nettverk ifname $nettkort type ethernet ip4 ${ipmedprefiks} gw4 ${gateway}
 nmcli con mod nettverk ipv4.addresses $IPmedPrefiks
 nmcli con mod nettverk ipv4.method manual
