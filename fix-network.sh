@@ -1,7 +1,7 @@
 #!/bin/bash
 # Script for å sette opp statisk IP på DHCP-provisjonerte maskiner
 # Safet Amedov 03/2017 USIT
-#################
+#
 
 #fjern dhcp-oppsett fra interfaces-fila
 sed -i '3,6d' /etc/network/interfaces
