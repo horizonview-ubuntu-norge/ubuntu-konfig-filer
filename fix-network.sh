@@ -36,16 +36,16 @@ macaddress=$(cat /sys/class/net/ens160/address)
 primdns=129.240.2.27
 secdns=129.240.2.40
 nettkort=$(ethernetnavn)
-ipmedprefiks=$(echo $ipaddr/$prefixxx)
-gwmedprefiks=$(echo $ipaddr/$prefixxx)
+IPmedPrefiks=$(echo $ipaddr/$prefixxx)
+GWmedPrefiks=$(echo $ipaddr/$prefixxx)
 
 
-# adding network card
+# adding network connection
 nmcli con add con-name nettverk ifname $nettkort type ethernet ip4 ${ipmedprefiks} gw4 ${gateway}
-nmcli con mod nettverk ipv4.addresses $ipmedprefiks
+nmcli con mod nettverk ipv4.addresses $IPmedPrefiks
 nmcli con mod nettverk ipv4.method manual
 nmcli con mod nettverk ipv4.dns "${primdns} ${secdns}"
-nmcli con mod nettverk ipv4.routes $gwmedprefiks
+nmcli con mod nettverk ipv4.routes $GWmedPrefiks
 nmcli con mod nettverk ipv4.gateway $gateway
 nmcli con mod nettverk ethernet.mac-address $macaddress
 nmcli con mod nettverk ipv4.dns-search uio.no
