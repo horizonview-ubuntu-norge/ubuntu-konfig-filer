@@ -27,13 +27,14 @@ sed -i 's/false/true/' /etc/NetworkManager/NetworkManager.conf
 service network-manager restart
 # Slå av aktiv device slik at nmcli tilkoblingen "wired connection 1" kan slettes uten
 # at det blir opprettet ny
+activeconnection=$(nmcli -t -f active,uuid c | awk -F "[ :]" '/yes:/ {print $2}')
 nmcli d disconnect $(nmcli -t -f state,device d | awk -F "[ :]" '/connected:/{print $2}')
 # Slett aktiv connection
-nmcli connection delete id $(nmcli -t -f active,uuid c | awk -F "[ :]" '/yes:/{print $2}')
+nmcli connection delete uuid $activeconnection
 
 
 # Her opprettes ny nettverkstilkobling
-nmcli con add con-name nettverk ifname $nettkort type ethernet ip4 ${ipmedprefiks} gw4 ${gateway}
+nmcli con add con-name nettverk ifname $nettkort type ethernet ip4 ${IPmedPrefiks} gw4 ${gateway}
 nmcli con mod nettverk ipv4.addresses $IPmedPrefiks
 nmcli con mod nettverk ipv4.method manual
 nmcli con mod nettverk ipv4.dns "${primdns} ${secdns}"
