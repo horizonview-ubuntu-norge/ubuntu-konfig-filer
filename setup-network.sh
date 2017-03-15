@@ -25,11 +25,11 @@ sed -i 's/false/true/' /etc/NetworkManager/NetworkManager.conf
 
 # Restart network-manager for at endring av NetworkManager.conf skal ta effekt
 service network-manager restart
-# Slå av device slik at nmcli tilkoblingen "wired connection 1" kan slettes uten
+# Slå av aktiv device slik at nmcli tilkoblingen "wired connection 1" kan slettes uten
 # at det blir opprettet ny
-nmcli d disconnect ens160
-# Slett gammel connection
-nmcli connection delete id "Wired connection 1"
+nmcli d disconnect $(nmcli -t -f state,device d | awk -F "[ :]" '/connected:/{print $2}')
+# Slett aktiv connection
+nmcli connection delete id $(nmcli -t -f active,uuid c | awk -F "[ :]" '/yes:/{print $2}')
 
 
 # Her opprettes ny nettverkstilkobling
