@@ -27,10 +27,12 @@ sed -i 's/false/true/' /etc/NetworkManager/NetworkManager.conf
 service network-manager restart
 # Slå av aktiv device slik at nmcli tilkoblingen "wired connection 1" kan slettes uten
 # at det blir opprettet ny
+nmcli c
 activeconnection=$(nmcli -t -f active,uuid c | awk -F "[ :]" '/yes:/ {print $2}')
 nmcli d disconnect $(nmcli -t -f state,device d | awk -F "[ :]" '/connected:/{print $2}')
+echo $activeconnection
 # Slett aktiv connection
-nmcli con delete uuid $activeconnection
+nmcli con delete uuid "$activeconnection"
 
 
 # Her opprettes ny nettverkstilkobling
