@@ -30,7 +30,7 @@ service network-manager restart
 activeconnection=$(nmcli -t -f active,uuid c | awk -F "[ :]" '/yes:/ {print $2}')
 nmcli d disconnect $(nmcli -t -f state,device d | awk -F "[ :]" '/connected:/{print $2}')
 # Slett aktiv connection
-nmcli connection delete uuid $activeconnection
+nmcli con delete uuid $activeconnection
 
 
 # Her opprettes ny nettverkstilkobling
